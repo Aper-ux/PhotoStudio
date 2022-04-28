@@ -12,7 +12,51 @@
     <title>PhotoStudio</title>
 </head>
 
+<script type="importmap">
+    {
+      "imports": {
+        "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+      }
+    }
+</script>
+
 <body>
+    <script type="module">
+        import { createApp } from 'vue'    
+        createApp({
+          data(){
+            return{
+              fotografias: [{
+                        codigo: 1, 
+                        descripcion: 'Fotografia 1: ',
+                        url: 'https://th.bing.com/th/id/R.ecfa1420707949509e6eb45b21e75407?rik=CrN7mEHrtn%2bWOw&pid=ImgRaw&r=0',
+                        categoria: 'naturaleza'
+                       },{
+                        codigo: 2, 
+                        descripcion: 'Fotografia 2: ',
+                        url: 'https://static.vecteezy.com/system/resources/previews/001/818/207/large_2x/pink-cherry-blossom-free-photo.jpeg',
+                        categoria: 'naturaleza'
+                       },{
+                        codigo: 3, 
+                        descripcion: 'Fotografia 3: ',
+                        url: 'https://pixnio.com/free-images/2017/05/22/2017-05-22-07-31-46.jpg',
+                        categoria: 'urbano'
+                       },{
+                        codigo: 4, 
+                        descripcion: 'Fotografia 4: ',
+                        url: 'https://cloudfront-us-east-1.images.arcpublishing.com/infobae/OXPYSI2VU5AA3JJOP3PFDNMMNE.jpeg',
+                        categoria: 'musica'
+                       },{
+                        codigo: 5, 
+                        descripcion: 'Fotografia 5: ',
+                        url: 'https://img2.rtve.es/imagenes/duki/1622195490606.jpg',
+                        categoria: 'musica'
+                       }],
+            }
+          },
+        }).mount('#app')
+  </script>
+
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark" style="background-color: rgba(0, 0, 0, 0.865);">
     <div class="container-fluid">
       <a class="navbar-brand" style="font-size: 26px;">PhotoStudio</a>
@@ -36,25 +80,26 @@
     </div>
   </nav>   
 
-  <h1 class="titulos">PhotoStudio</h1>
+  <h1 class="titulos">Galeria</h1>
 
+  <div id="app">
   <article class="container" style="width: 80%;">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="descripcion"></button>
+        <template v-for="i in fotografias">
+          <button type="button" data-bs-target="#carouselExampleIndicators" v-bind:data-bs-slide-to="i.codigo" v-bind:aria-label="i.descripcion"></button>
+        </template>
       </div>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="https://th.bing.com/th/id/R.ecfa1420707949509e6eb45b21e75407?rik=CrN7mEHrtn%2bWOw&pid=ImgRaw&r=0" class="d-block w-100" alt="...">
+          <img src="https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/latin-america/birds1.jpg?crop=0,123,2100,1155&wid=4000&hei=2200&scl=0.525" class="d-block w-100" alt="...">
         </div>
+        <template v-for="i in fotografias">
         <div class="carousel-item">
-          <img src="https://th.bing.com/th/id/R.3e8f311e7965e21e2e140aedd5acdebe?rik=gWwUfx8kprPARg&pid=ImgRaw&r=0" class="d-block w-100" alt="...">
+          <img v-bind:src="i.url" class="d-block w-100" alt="...">
         </div>
-        <div class="carousel-item">
-          <img src="https://static.vecteezy.com/system/resources/previews/001/818/207/large_2x/pink-cherry-blossom-free-photo.jpeg" class="d-block w-100" alt="...">
-        </div>
+        </template>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -67,6 +112,23 @@
     </div>
   </article>
 
+  <article style="display: flex; flex-direction: column;">
+    <article style="display: flex; flex-wrap: wrap; justify-content: space-around; margin-bottom: 5%; margin-top: 5%;">
+    <template v-for="i in fotografias">
+    <div class="card" style="width: 28rem; background-color: black; margin-top: 1%;">
+    <img v-bind:src="i.url" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{ i.descripcion }}</h5>
+            <p class="card-text">{{ i.categoria }}</p>
+            <a href="#" class="btn btn-primary">{{ i.codigo }}</a>
+        </div>
+    </div> 
+    </template>
+    </article>
+  </article>
+  </div>
+
+
   <article class="seccion">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/USAF_photographer.jpg/1200px-USAF_photographer.jpg" width="45%" style="align-self: center; margin-left: 2%; border-radius: 2%; "></img>
     <p class="display-9" style="margin-left: 2%; font-size: larger;">
@@ -75,7 +137,8 @@
       Dignissim enim sit amet venenatis urna cursus eget. Duis ultricies lacus sed turpis tincidunt.<br>
       Quis hendrerit dolor magna eget est lorem.<br>
       En fin, mandame tus requerimientos por aca:<br>
-      <button class="btn btn-dark" href="Requerimientos.html" style="font-size: 15px;">Requerimientos</button>
+      <a class="btn btn-dark" href="Requerimientos.html" style="font-size: 15px;">Requerimientos</a>
     </p>
-</article>
+  </article>
 </body>
+</html>
